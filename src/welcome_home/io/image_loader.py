@@ -11,6 +11,7 @@ class JpegData(AbstractDataSet):
     def _load(self) -> np.ndarray:
         print("Loading: {}".format(self._file_path))
         img = cv2.imread(self._file_path)
+        img = cv2.resize(img, (100, 100), interpolation=cv2.INTER_AREA)
         return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     def _save(self, array: np.ndarray) -> None:

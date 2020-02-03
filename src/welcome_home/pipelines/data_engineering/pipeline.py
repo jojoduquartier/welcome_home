@@ -33,24 +33,91 @@ PLEASE DELETE THIS FILE ONCE YOU START WORKING ON YOUR OWN PROJECT!
 
 from kedro.pipeline import Pipeline, node
 
-from .nodes import split_data
+from .nodes import split_data, combine_train_x, combine_train_y, combine_test_x, combine_test_y
 
 
-def create_pipeline(**kwargs):
+def create_split_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                split_data,
-                ["example_iris_data", "params:example_test_data_ratio"],
-                dict(
-                    train_x="example_train_x",
-                    train_y="example_train_y",
-                    test_x="example_test_x",
-                    test_y="example_test_y",
+                func=split_data,
+                inputs=["josiah", "params:split_ratio", "params:josiah_label", "params:random_state"],
+                outputs=dict(
+                    train_x="josiah_train_x",
+                    train_y="josiah_train_y",
+                    test_x="josiah_test_x",
+                    test_y="josiah_test_y",
                 ),
-            )
+            ),
+            node(
+                func=split_data,
+                inputs=["amaka", "params:split_ratio", "params:amaka_label", "params:random_state"],
+                outputs=dict(
+                    train_x="amaka_train_x",
+                    train_y="amaka_train_y",
+                    test_x="amaka_test_x",
+                    test_y="amaka_test_y",
+                ),
+            ),
+            node(
+                func=split_data,
+                inputs=["derrick", "params:split_ratio", "params:derrick_label", "params:random_state"],
+                outputs=dict(
+                    train_x="derrick_train_x",
+                    train_y="derrick_train_y",
+                    test_x="derrick_test_x",
+                    test_y="derrick_test_y",
+                ),
+            ),
         ]
     )
+
+
+def create_combine_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                func=combine_train_x,
+                inputs=["josiah_train_x", "amaka_train_x", "derrick_train_x"],
+                outputs=dict(train_x="train_x")
+            ),
+            node(
+                func=combine_train_y,
+                inputs=["josiah_train_y", "amaka_train_y", "derrick_train_y"],
+                outputs=dict(train_y="train_y")
+            ),
+            node(
+                func=combine_test_x,
+                inputs=["josiah_test_x", "amaka_test_x", "derrick_test_x"],
+                outputs=dict(test_x="test_x")
+            ),
+            node(
+                func=combine_test_y,
+                inputs=["josiah_test_y", "amaka_test_y", "derrick_test_y"],
+                outputs=dict(test_y="test_y")
+            ),
+        ]
+    )
+
+
+def create_pipeline(**kwargs):
+    return create_split_pipeline() + create_combine_pipeline()
+
+# def create_pipeline(**kwargs):
+#     return Pipeline(
+#         [
+#             node(
+#                 split_data,
+#                 ["example_iris_data", "params:example_test_data_ratio"],
+#                 dict(
+#                     train_x="example_train_x",
+#                     train_y="example_train_y",
+#                     test_x="example_test_x",
+#                     test_y="example_test_y",
+#                 ),
+#             )
+#         ]
+#     )
 
 # conda activate kwabo
 # cd /Users/josiahhounyo/Documents/py_server
