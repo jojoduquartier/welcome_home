@@ -141,3 +141,7 @@ amaka:
 derrick:
   type: welcome_home.io.folder_loader.MyOwnDataSet
   filepath: data/01_raw/derrick
+
+others:
+  type: welcome_home.io.folder_loader.MyOwnDataSet
+  filepath: data/01_raw/others

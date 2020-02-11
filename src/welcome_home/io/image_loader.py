@@ -1,6 +1,6 @@
 from kedro.io import AbstractDataSet
+from PIL import Image
 import numpy as np
-import cv2
 
 
 class JpegData(AbstractDataSet):
@@ -10,9 +10,10 @@ class JpegData(AbstractDataSet):
 
     def _load(self) -> np.ndarray:
         print("Loading: {}".format(self._file_path))
-        img = cv2.imread(self._file_path)
-        img = cv2.resize(img, (100, 100), interpolation=cv2.INTER_AREA)
-        return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        img = Image.open(self._file_path)
+        img = img.convert("L")
+        img = img.resize((100, 100), Image.ANTIALIAS)
+        return np.array(img)
 
     def _save(self, array: np.ndarray) -> None:
         pass

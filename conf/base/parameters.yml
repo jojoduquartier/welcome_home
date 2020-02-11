@@ -7,9 +7,10 @@ example_learning_rate: 0.01
 
 # kwabo specific
 local_server: "http://10.0.0.212:8000//"
-split_ratio: .1
+split_ratio: .25
 random_state: 10
 josiah_label: 0
 amaka_label: 1
 derrick_label: 2
+others_label: 3
 

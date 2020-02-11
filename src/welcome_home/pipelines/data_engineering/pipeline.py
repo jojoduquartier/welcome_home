@@ -69,6 +69,16 @@ def create_split_pipeline(**kwargs):
                     test_y="derrick_test_y",
                 ),
             ),
+            node(
+                func=split_data,
+                inputs=["others", "params:split_ratio", "params:others_label", "params:random_state"],
+                outputs=dict(
+                    train_x="others_train_x",
+                    train_y="others_train_y",
+                    test_x="others_test_x",
+                    test_y="others_test_y",
+                ),
+            ),
         ]
     )
 
@@ -78,22 +88,22 @@ def create_combine_pipeline(**kwargs):
         [
             node(
                 func=combine_train_x,
-                inputs=["josiah_train_x", "amaka_train_x", "derrick_train_x"],
+                inputs=["josiah_train_x", "amaka_train_x", "derrick_train_x", "others_train_x"],
                 outputs=dict(train_x="train_x")
             ),
             node(
                 func=combine_train_y,
-                inputs=["josiah_train_y", "amaka_train_y", "derrick_train_y"],
+                inputs=["josiah_train_y", "amaka_train_y", "derrick_train_y", "others_train_y"],
                 outputs=dict(train_y="train_y")
             ),
             node(
                 func=combine_test_x,
-                inputs=["josiah_test_x", "amaka_test_x", "derrick_test_x"],
+                inputs=["josiah_test_x", "amaka_test_x", "derrick_test_x", "others_test_x"],
                 outputs=dict(test_x="test_x")
             ),
             node(
                 func=combine_test_y,
-                inputs=["josiah_test_y", "amaka_test_y", "derrick_test_y"],
+                inputs=["josiah_test_y", "amaka_test_y", "derrick_test_y", "others_test_y"],
                 outputs=dict(test_y="test_y")
             ),
         ]

@@ -32,11 +32,11 @@ PLEASE DELETE THIS FILE ONCE YOU START WORKING ON YOUR OWN PROJECT!
 """
 
 from sklearn.model_selection import train_test_split
-from typing import Any, Dict, List
+from typing import Any, Dict
 
-import pandas as pd
 import numpy as np
 
+# I could have just used stratified splits :(
 
 # I want to be able to load all three folders
 def split_data(data: np.ndarray, split_ratio: float, label: int, random_state: int) -> Dict[str, Any]:
