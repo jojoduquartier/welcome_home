@@ -1,5 +1,5 @@
 ipython>=7.0.0, <8.0
-jupyter>=1.0.0, <2.0
+jupyter>=1.2.21, <2.0
 jupyter_client>=5.1.0, <6.0
 jupyterlab==0.31.1
 kedro==0.15.5
